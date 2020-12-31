@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup Label="Globals" >
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{f6357fe4-3573-4875-b9aa-c8612bc3be96}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\bitswap.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\colorpalettes.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\colorutils.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\FastLED.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\hsv2rgb.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\lib8tion.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\noise.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\platforms.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\power_mgt.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\wiring.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\clockless_rmt_esp32.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\bitswap.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\chipsets.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\color.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\colorpalettes.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\colorutils.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\controller.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\cpp_compat.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\dmx.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\FastLED.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastled_config.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastled_delay.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastled_progmem.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastpin.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi_bitbang.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi_dma.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi_nop.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi_ref.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\fastspi_types.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\hsv2rgb.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\led_sysdefs.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\lib8tion.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\noise.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\pixelset.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\pixeltypes.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\power_mgt.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\lib8tion\math8.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\lib8tion\random8.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\lib8tion\scale8.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\lib8tion\trig8.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\apollo3\clockless_apollo3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\apollo3\fastled_apollo3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\apollo3\fastpin_apollo3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\apollo3\fastspi_apollo3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\apollo3\led_sysdefs_apollo3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\common\m0clockless.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d21\clockless_arm_d21.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d21\fastled_arm_d21.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d21\fastpin_arm_d21.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d21\led_sysdefs_arm_d21.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d51\clockless_arm_d51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d51\fastled_arm_d51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d51\fastpin_arm_d51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\d51\led_sysdefs_arm_d51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\clockless_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\clockless_block_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\fastled_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\fastpin_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\fastspi_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\led_sysdefs_arm_k20.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\octows2811_controller.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\smartmatrix_t3.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k20\ws2812serial_controller.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\clockless_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\clockless_block_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\fastled_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\fastpin_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\fastspi_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\k66\led_sysdefs_arm_k66.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\kl26\clockless_arm_kl26.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\kl26\fastled_arm_kl26.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\kl26\fastpin_arm_kl26.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\kl26\fastspi_arm_kl26.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\kl26\led_sysdefs_arm_kl26.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\block_clockless_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\clockless_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\fastled_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\fastpin_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\fastspi_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\mxrt1062\led_sysdefs_arm_mxrt1062.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf51\clockless_arm_nrf51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf51\fastled_arm_nrf51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf51\fastpin_arm_nrf51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf51\fastspi_arm_nrf51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf51\led_sysdefs_arm_nrf51.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\arbiter_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\clockless_arm_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\fastled_arm_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\fastpin_arm_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\fastpin_arm_nrf52_variants.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\fastspi_arm_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\nrf52\led_sysdefs_arm_nrf52.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\clockless_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\clockless_block_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\fastled_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\fastpin_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\fastspi_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\sam\led_sysdefs_arm_sam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\stm32\clockless_arm_stm32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\stm32\cm3_regs.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\stm32\fastled_arm_stm32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\stm32\fastpin_arm_stm32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\arm\stm32\led_sysdefs_arm_stm32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\avr\clockless_trinket.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\avr\fastled_avr.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\avr\fastpin_avr.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\avr\fastspi_avr.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\avr\led_sysdefs_avr.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\clockless_block_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\clockless_i2s_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\clockless_rmt_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\fastled_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\fastpin_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\32\led_sysdefs_esp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\8266\clockless_block_esp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\8266\clockless_esp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\8266\fastled_esp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\8266\fastpin_esp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\platforms\esp\8266\led_sysdefs_esp8266.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)keywords.txt" />
+<Text Include="$(MSBuildThisFileDirectory)library.properties" />
+<Text Include="$(MSBuildThisFileDirectory)src\platforms\arm\d51\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)component.mk" />
+<None Include="$(MSBuildThisFileDirectory)library.json" />
+<None Include="$(MSBuildThisFileDirectory)LICENSE" />
+<None Include="$(MSBuildThisFileDirectory)PORTING.md" />
+<None Include="$(MSBuildThisFileDirectory)README.md" />
+<None Include="$(MSBuildThisFileDirectory)release_notes.md" />
+  </ItemGroup>
+</Project>

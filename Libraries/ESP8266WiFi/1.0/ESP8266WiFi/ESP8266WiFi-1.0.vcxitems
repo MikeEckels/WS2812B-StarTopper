@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup Label="Globals" >
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{da10632b-8843-48dc-a61a-7e84907f60fd}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\BearSSLHelpers.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\CertStoreBearSSL.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFi.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiAP.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiGeneric.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiGratuitous.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiMulti.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiScan.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiSTA-WPS.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiSTA.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiClient.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiClientSecureAxTLS.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiClientSecureBearSSL.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiServer.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiServerSecureAxTLS.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiServerSecureBearSSL.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\WiFiUdp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\BearSSLHelpers.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\CertStoreBearSSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiAP.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiGeneric.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiGratuitous.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiMulti.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiScan.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiSTA.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266WiFiType.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiClient.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiClientSecure.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiClientSecureAxTLS.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiClientSecureBearSSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiServer.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiServerSecure.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiServerSecureAxTLS.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiServerSecureBearSSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WiFiUdp.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\ClientContext.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\DataSource.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\slist.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\ssl.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\SSLContext.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\UdpContext.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\WiFiState.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\include\wl_definitions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)keywords.txt" />
+<Text Include="$(MSBuildThisFileDirectory)library.properties" />
+  </ItemGroup>
+  <ItemGroup>
+    
+  </ItemGroup>
+</Project>

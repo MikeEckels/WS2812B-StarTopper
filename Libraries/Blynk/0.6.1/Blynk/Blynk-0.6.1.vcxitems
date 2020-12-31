@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup Label="Globals" >
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{a4640139-ee13-4ab9-b2a9-9faef24d095f}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\utility\BlynkDebug.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\utility\BlynkHandlers.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\utility\BlynkTimer.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\utility\utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkApiArduino.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkApiMbed.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkApiParticle.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkParticle.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleBLEPeripheral.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleCC3000.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleCurieBLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEnergiaEthernet.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEnergiaWiFi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp32.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp32_BLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp32_BT.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp32_SSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEsp8266_SSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEthernet.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEthernet2.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEthernetSSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleEthernetV2_0.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleFishino.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleIntelEdisonWiFi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleLinkItONE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleMKR1000.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleMKRGSM.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleMKRNB.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleParticle.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleRedBearLab_BLE_Nano.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleRedBear_Duo.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleRedBear_Duo_BLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleRFduinoBLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleSerialBLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleShieldEsp8266.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleSIM800.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleSimbleeBLE.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleStream.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleTinyDuino.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleTinyGSM.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleUIPEthernet.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleUserDefined.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWifi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWiFiLink.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWiFiNINA.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWiFiShield101.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWiFiShield101_SSL.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWiFly.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWildFire.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleWizFi310.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkSimpleYun.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\BlynkWidgets.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetBridge.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetGPS.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetLCD.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetLED.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetMap.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetRTC.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetSD.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetTable.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetTerminal.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\WidgetTimeInput.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkArduinoClient.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkArduinoGSM.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkArduinoNB.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkBLEPeripheralSerial.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkCC3000.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkEthernet.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkGsmClient.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkSerial.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkWiFiCommon.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkWiFly.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Adapters\BlynkWildFire.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkApi.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkConfig.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkDebug.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkDetectDevice.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkEveryN.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkHandlers.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkParam.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkProtocol.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkProtocolDefs.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkTemplates.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkTimer.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\Blynk\BlynkWidgetBase.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\blynkcloud_der.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\blynkcloud_pem.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\dst_der.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\isrgroot_der.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\letsencrypt_der.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\certs\letsencrypt_pem.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\utility\BlynkDateTime.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\utility\BlynkFifo.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\utility\BlynkUtility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)keywords.txt" />
+<Text Include="$(MSBuildThisFileDirectory)library.properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)library.json" />
+<None Include="$(MSBuildThisFileDirectory)LICENSE" />
+<None Include="$(MSBuildThisFileDirectory)Makefile" />
+<None Include="$(MSBuildThisFileDirectory)README.md" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_blynk-cloudcom.crt" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_blynk-cloudcom.der" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_DSTRootX3.der" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_DSTRootX3.pem" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_ISRGRootX1.crt" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_ISRGRootX1.der" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_LetsEncryptAuthorityX3.crt" />
+<None Include="$(MSBuildThisFileDirectory)src\certs\_LetsEncryptAuthorityX3.der" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup Label="Globals" >
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{aa385138-4db9-430d-909c-983b061be9ed}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266mDNS.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\ESP8266mDNS_Legacy.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\LEAmDNS.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\LEAmDNS_Control.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\LEAmDNS_Helpers.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\LEAmDNS_Structs.cpp" />
+<ClCompile Include="$(MSBuildThisFileDirectory)src\LEAmDNS_Transfer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266mDNS.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\ESP8266mDNS_Legacy.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\LEAmDNS.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\LEAmDNS_lwIPdefs.h" />
+<ClInclude Include="$(MSBuildThisFileDirectory)src\LEAmDNS_Priv.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)keywords.txt" />
+<Text Include="$(MSBuildThisFileDirectory)library.properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.rst" />
+  </ItemGroup>
+</Project>
