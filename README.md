@@ -1,6 +1,7 @@
 # WS2812B-StarTopper
  RGB Christmas tree star topper with 126 individually adressable WS2812B LED's. The main controller is based off of an esp8266-12E embedded into a custom PCB to provide voltage regulation, 5v<-->3.3v level shifting, and an easy programming interface.Other than the custom electronics, everything is 3D-printable.
  
+ - [App Config](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/Photos/App)
  - [Pictures](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/Photos)
  - [3D Files](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/3DFiles)
  - [Altium Files](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/AltiumFiles)
@@ -54,4 +55,10 @@
   - Star::SetFramesPerSecond(unsigned int fps) sets the refresh rate for patterns when in patern mode
     - Arguments: unsigned int fps
     - Return: None
+    
+ # App Control
+ Using the [Blynk](https://github.com/blynkkk/blynk-library) arduino library and accompanying android and apple app, a simple user interface can be made. This allows for multiple types of widgets to be setup to transfer data back and fourth between the star and the app. In this simple setup, a color picker, a brightness slider, and a pattern mode button are used to give simple wireless functionality to the star.
  
+ ![StarApp](https://i.imgur.com/xyQ3llG.jpg)
+ 
+ Configuration of each app widget can be found [here](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/Photos/App).
