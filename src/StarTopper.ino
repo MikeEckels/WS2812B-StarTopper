@@ -7,6 +7,7 @@ void setup() {
 	StarTopper.SetMode(1);
 	StarTopper.SetFramesPerSecond(120);
 	StarTopper.SetBrightness(50);
+	TelnetStream.print("Yo");
 }
 
 void loop() {
