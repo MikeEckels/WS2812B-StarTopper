@@ -12,8 +12,8 @@ void UpdateHandler::SetupOTA(const char* hostName, const char* ssid, const char*
         ESP.restart();
     }
 
-    ArduinoOTA.setPort(3232);
-    ArduinoOTA.setPassword("password");
+    //ArduinoOTA.setPort(3232);
+    //ArduinoOTA.setPassword("password");
 
     ArduinoOTA.onStart([]() {
         String type;

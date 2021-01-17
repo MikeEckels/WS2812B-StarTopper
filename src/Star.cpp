@@ -27,6 +27,7 @@ void Star::Update() {
 		FastLED.show();
 		FastLED.delay((1000 / this->framesPerSecond));
 		EVERY_N_MILLISECONDS(20) { this->hue++; }
+		Updater.handle();
 	}
 }
 
