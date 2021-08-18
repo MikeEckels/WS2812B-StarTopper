@@ -1,8 +1,6 @@
 #include "Star.h"
-#include "NetworkCredentials.h"
-#include <BlynkSimpleEsp8266.h>
 
-UpdateHandler Updater;
+BlynkWifi Blynk(_blynkTransport);
 
 namespace internStar {
 	Star* pThis;
@@ -13,21 +11,42 @@ Star::Star() {
 }
 
 void Star::begin() {
-	Updater.SetupOTA(OTAhostName, ssid, pass);
-	Blynk.config(auth);
-	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
+	pinMode(this->pin, OUTPUT);
+	pinMode(this->wifiResetPin, INPUT_PULLUP);
+
+	delay(4000);
+	if (!digitalRead(this->wifiResetPin)) {
+		this->networkManager.EraseEeprom();
+	}
+
+	this->networkManager.ReadEeprom().toCharArray(this->authToken, 33);
+
+	if (this->networkManager.GetConnectedState()) {
+		Blynk.config(this->authToken);
+		this->connected = 1;
+	}
+	else {
+		this->networkManager.SetupAP(this->espSsid, this->espPass);
+		this->connected = 0;
+	}
+
+	if (this->connected) {
+		FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
+	}
 }
 
 void Star::Update() {
-	Blynk.run();
-	Updater.handle();
-	FastLED.show();
-	if (this->patternMode) {
-		(this->*patterns[this->currentPattern])();
+	this->networkManager.UpdateServer();
+
+	if (this->connected) {
+		Blynk.run();
 		FastLED.show();
-		FastLED.delay((1000 / this->framesPerSecond));
-		EVERY_N_MILLISECONDS(20) { this->hue++; }
-		Updater.handle();
+		if (this->patternMode) {
+			(this->*patterns[this->currentPattern])();
+			FastLED.show();
+			FastLED.delay((1000 / this->framesPerSecond));
+			EVERY_N_MILLISECONDS(20) { this->hue++; }
+		}
 	}
 }
 

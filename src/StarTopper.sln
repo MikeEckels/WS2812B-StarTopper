@@ -5,33 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StarTopper", "StarTopper.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastLED-3.4.0", "Libraries\FastLED\3.4.0\FastLED\FastLED-3.4.0.vcxitems", "{F6357FE4-3573-4875-B9AA-C8612BC3BE96}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ESP8266WiFi-1.0", "Libraries\ESP8266WiFi\1.0\ESP8266WiFi\ESP8266WiFi-1.0.vcxitems", "{DA10632B-8843-48DC-A61A-7E84907F60FD}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ESP8266mDNS-1.2", "Libraries\ESP8266mDNS\1.2\ESP8266mDNS\ESP8266mDNS-1.2.vcxitems", "{AA385138-4DB9-430D-909C-983B061BE9ED}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoOTA-1.0", "Libraries\ArduinoOTA\1.0\ArduinoOTA\ArduinoOTA-1.0.vcxitems", "{84B0A36A-E129-4F23-873E-688221573093}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TelnetStream-1.2.1", "Libraries\TelnetStream\1.2.1\TelnetStream\TelnetStream-1.2.1.vcxitems", "{A6191A4B-9E13-4890-B394-289932033517}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Blynk-0.6.1", "Libraries\Blynk\0.6.1\Blynk\Blynk-0.6.1.vcxitems", "{A4640139-EE13-4AB9-B2A9-9FAEF24D095F}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Libraries\ArduinoOTA\1.0\ArduinoOTA\ArduinoOTA-1.0.vcxitems*{84b0a36a-e129-4f23-873e-688221573093}*SharedItemsImports = 9
-		Libraries\Blynk\0.6.1\Blynk\Blynk-0.6.1.vcxitems*{a4640139-ee13-4ab9-b2a9-9faef24d095f}*SharedItemsImports = 9
-		Libraries\TelnetStream\1.2.1\TelnetStream\TelnetStream-1.2.1.vcxitems*{a6191a4b-9e13-4890-b394-289932033517}*SharedItemsImports = 9
-		Libraries\ESP8266mDNS\1.2\ESP8266mDNS\ESP8266mDNS-1.2.vcxitems*{aa385138-4db9-430d-909c-983b061be9ed}*SharedItemsImports = 9
-		Libraries\ArduinoOTA\1.0\ArduinoOTA\ArduinoOTA-1.0.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\Blynk\0.6.1\Blynk\Blynk-0.6.1.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\ESP8266mDNS\1.2\ESP8266mDNS\ESP8266mDNS-1.2.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\ESP8266WiFi\1.0\ESP8266WiFi\ESP8266WiFi-1.0.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\FastLED\3.4.0\FastLED\FastLED-3.4.0.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\TelnetStream\1.2.1\TelnetStream\TelnetStream-1.2.1.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		Libraries\ESP8266WiFi\1.0\ESP8266WiFi\ESP8266WiFi-1.0.vcxitems*{da10632b-8843-48dc-a61a-7e84907f60fd}*SharedItemsImports = 9
-		Libraries\FastLED\3.4.0\FastLED\FastLED-3.4.0.vcxitems*{f6357fe4-3573-4875-b9aa-c8612bc3be96}*SharedItemsImports = 9
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86

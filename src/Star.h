@@ -1,15 +1,34 @@
-#pragma once
+#ifndef STAR_H
+#define STAR_H
+
 #include "Arduino.h"
-#include <FastLED.h>
-#include "OTAHandler.h"
 
+#ifdef ESP8266
+//#include <BlynkSimpleEsp8266.h>
+#include "BlynkSimpleEsp8266Fixed.h"
 #define FASTLED_ESP8266_RAW_PIN_ORDER
-#define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
+#elif defined(ESP32)
+//#include <BlynkSimpleEsp32.h>
+#include "BlynkSimpleEsp32Fixed.h"
+#else
+#error "Unsupported Board Type. Please use ESP8266 or ESP32"
+#endif
 
-FASTLED_USING_NAMESPACE
+#include <FastLED.h>
+#include "WifiManager.h"
+
+#define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 class Star {
 private:
+	//WifiManager Network Definitions
+	bool connected = 0;
+	char authToken[33];
+	char* espSsid = "StarTopper";
+	char* espPass = "";
+	static const unsigned char wifiResetPin = 5;
+	WifiManager networkManager;
+
 	//Hardware Definitions
 	static const unsigned char pin = 4;
 	static const EOrder colorOrder = GRB;
@@ -82,3 +101,5 @@ public:
 	void SetBrightness(unsigned int brightness);
 	void SetFramesPerSecond(unsigned int fps);
 };
+
+#endif //STAR_H
