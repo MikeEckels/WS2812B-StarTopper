@@ -3,15 +3,18 @@
 AsyncWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 
-WifiManager::WifiManager() : wifiResetPin(5) {}
+WifiManager::WifiManager() : wifiResetPin(5), seedPin(A0) {}
 
-WifiManager::WifiManager(unsigned char wifiRestPin) : wifiResetPin(wifiResetPin) {}
+WifiManager::WifiManager(unsigned char wifiResetPin, unsigned char seedPin) : wifiResetPin(wifiResetPin), seedPin(seedPin) {}
 
 WifiManager::~WifiManager() {}
 
 void WifiManager::Begin() {
+    pinMode(this->seedPin, INPUT);
     pinMode(this->wifiResetPin, INPUT_PULLUP);
+
     EEPROM.begin(512);
+    randomSeed(analogRead(this->seedPin));
 
     WifiManager::CheckEraseButton();
     WifiManager::ReadEeprom();
@@ -39,9 +42,12 @@ bool WifiManager::Connect() {
 }
 
 bool WifiManager::SpawnAP(char* ssid, char* password) {
+    char* fullSSID = (char*)malloc(strlen(ssid) + 5);
     WiFi.disconnect();
     delay(100);
-    bool state = WiFi.softAP(ssid, password);
+    (String(ssid) + WifiManager::GetRandomAPSSIDSuffix()).toCharArray(fullSSID, strlen(ssid) + 5);
+    bool state = WiFi.softAP(fullSSID , password);
+    free(fullSSID);
 
     DEBUG_PRINTLN();
     if (state) {
@@ -104,6 +110,7 @@ void WifiManager::ReadEeprom() {
         this->password += char(EEPROM.read(i + 32));
         this->authentication += char(EEPROM.read(i + 64));
     }
+
     DEBUG_PRINTLN("SSID: ");
     DEBUG_PRINT_INFO(this->ssid);
     DEBUG_PRINTLN("Password: ");
@@ -128,6 +135,15 @@ void WifiManager::CheckEraseButton() {
     }
 }
 
+String WifiManager::SetRandomAPSSIDSuffix() {
+    String suffix;
+    for (unsigned char i = 0; i < 4; i++) {
+        suffix += (String)random(0, 10);
+    }
+
+    return String(suffix);
+}
+
 void WifiManager::notFoundHandler(AsyncWebServerRequest* request) {
     request->send(404, "text/plain", "Not found");
 }
@@ -150,10 +166,10 @@ void WifiManager::WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* pay
         if (payload[0] == '#') {
             String message = String((char*)(payload));
             message = message.substring(1);
-           DEBUG_PRINT_NOTICE("Received: " + message);
+            DEBUG_PRINT_NOTICE("Received: " + message);
 
             DynamicJsonDocument doc(1024);
-            DeserializationError error = deserializeJson(doc, message);
+            //DeserializationError error = deserializeJson(doc, message);
 
             String ssid = doc["ssid"];
             String password = doc["password"];
@@ -205,5 +221,7 @@ void WifiManager::WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* pay
                 break;
             }
         }
+    default:
+        break;
     }
 }

@@ -29,19 +29,21 @@ private:
 	String authentication;
 	bool connectionState = false;
 	unsigned char rstBtnDelaySec = 4;
-	unsigned char wifiResetPin = NULL;
+	unsigned char wifiResetPin;
+	unsigned char seedPin;
 
 	void CreateAP();
 	void ReadEeprom();
 	void EraseEeprom();
 	void CheckEraseButton();
+	String SetRandomAPSSIDSuffix();
 
 	static void notFoundHandler(AsyncWebServerRequest* request);
 	static void WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* payload, size_t length);
 	
 public:
 	WifiManager();
-	WifiManager(unsigned char wifiResetPin);
+	WifiManager(unsigned char wifiResetPin, unsigned char seedPin);
 	~WifiManager();
 
 	void Begin();

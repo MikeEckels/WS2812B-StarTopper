@@ -1,7 +1,7 @@
 #ifndef WIFI_MANAGER_WEB_PAGE_H
 #define WIFI_MANAGER_WEB_PAGE_H
 
-static char webpage[] PROGMEM = R"=====(
+const static char webpage[] PROGMEM = R"=====(
 <html>
   <head>
     <script>

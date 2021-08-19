@@ -25,8 +25,8 @@ private:
 	//WifiManager Network Definitions
 	WifiManager networkManager;
 	char auth[33];
-	char* espSSID = "StarTopper";
-	char* espPass = "";
+	char* espSSID = (char*)"StarTopper";
+	char* espPass = (char*)"";
 	static const unsigned char wifiResetPin = 5;
 
 	//Hardware Definitions
