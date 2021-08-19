@@ -3,133 +3,60 @@
 AsyncWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 
-WifiManager::WifiManager() {}
+WifiManager::WifiManager() : wifiResetPin(5) {}
+
+WifiManager::WifiManager(unsigned char wifiRestPin) : wifiResetPin(wifiResetPin) {}
 
 WifiManager::~WifiManager() {}
 
-void WebSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t length) {
-    switch (type) {
-    case WStype_DISCONNECTED:
-        Serial.printf("[%u] Device disconnected!\n", num);
-        break;
-
-    case WStype_CONNECTED: {
-        IPAddress ip = webSocket.remoteIP(num);
-        Serial.printf("[%u] Device connected at %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
-
-        webSocket.sendTXT(num, "Connected");
-    }
-                         break;
-
-    case WStype_TEXT:
-        //Serial.printf("[%u] Received: %s\n", num, payload);
-
-        if (payload[0] == '#') {
-            String message = String((char*)(payload));
-            message = message.substring(1);
-            Serial.println("Received: " + message);
-
-            DynamicJsonDocument doc(1024);
-            DeserializationError error = deserializeJson(doc, message);
-
-            String ssid = doc["ssid"];
-            String password = doc["password"];
-            String authentication = doc["authentication"];
-
-            if (ssid.length() > 0 && password.length() > 0) {
-                Serial.println("Clearing EEPROM");
-                for (int i = 0; i < 512; ++i) {
-                    EEPROM.write(i, 0);
-                }
-
-                // Storing credentials
-                Serial.println("Writing EEPROM ssid:");
-                Serial.print("Wrote: ");
-                for (int i = 0; i < ssid.length(); ++i) {
-                    EEPROM.write(i, ssid[i]);
-                    Serial.print(ssid[i]);
-                }
-                Serial.println();
-                Serial.println();
-
-                Serial.println("Writing EEPROM password:");
-                Serial.print("Wrote: ");
-                for (int i = 0; i < password.length(); ++i) {
-                    EEPROM.write(32 + i, password[i]);
-                    Serial.print(password[i]);
-                }
-                Serial.println();
-                Serial.println();
-
-                Serial.println("Writing EEPROM authentication token:");
-                Serial.print("Wrote: ");
-                for (int i = 0; i < authentication.length(); ++i) {
-                    EEPROM.write(64 + i, authentication[i]);
-                    Serial.print(authentication[i]);
-                }
-                Serial.println();
-                Serial.println();
-
-                EEPROM.commit();
-                delay(2000);
-                Serial.println("Restarting...");
-                delay(2000);
-
-                ESP.restart();
-                break;
-            }
-        }
-    }
-}
-
-void notFound(AsyncWebServerRequest* request) {
-    request->send(404, "text/plain", "Not found");
-}
-
-void WifiManager::EraseEeprom() {
+void WifiManager::Begin() {
+    pinMode(this->wifiResetPin, INPUT_PULLUP);
     EEPROM.begin(512);
-    Serial.println("Clearing EEPROM");
-    for (int i = 0; i < 512; ++i)
-    {
-        EEPROM.write(i, 0);
-    }
-    EEPROM.commit();
+
+    WifiManager::CheckEraseButton();
+    WifiManager::ReadEeprom();
 }
 
-void WifiManager::SetupAP(char* ssid, char* password) {
+bool WifiManager::Connect() {
+    DEBUG_PRINTLN("Waiting for Wifi connection");
+
+    WiFi.begin(&ssid[0], &password[0]);
+    for (int i = 0; i < 20; i++) {
+        if (WiFi.status() == WL_CONNECTED) {
+            DEBUG_PRINT_NOTICE("Succesfully Connected!");
+            this->connectionState = true;
+            return true;
+        }
+
+        delay(500);
+        DEBUG_PRINT("*");
+    }
+    DEBUG_PRINTLN();
+    DEBUG_PRINT_ERR("Connection timed out");
+    DEBUG_PRINT_NOTICE("Starting the access point");
+    this->connectionState = false;
+    return false;
+}
+
+bool WifiManager::SpawnAP(char* ssid, char* password) {
     WiFi.disconnect();
     delay(100);
-    WiFi.softAP(ssid, password);
-    LaunchAP();
-    Serial.println("Server Started");
-    webSocket.begin();
-    webSocket.onEvent(WebSocketEvent);
-}
+    bool state = WiFi.softAP(ssid, password);
 
-String WifiManager::ReadEeprom() {
-    EEPROM.begin(512);
-    Serial.println("Reading EEPROM");
+    DEBUG_PRINTLN();
+    if (state) {
+        DEBUG_PRINTLN("Access Point IP: ");
+        DEBUG_PRINT_INFO(WiFi.softAPIP());
+        CreateAP();
 
-    for (int i = 0; i < 32; ++i) {
-        ssid += char(EEPROM.read(i));
+        webSocket.begin();
+        webSocket.onEvent(WebSocketEventHandler);
     }
-    Serial.print("SSID: ");
-    Serial.println(ssid);
-
-    for (int i = 32; i < 64; ++i) {
-        password += char(EEPROM.read(i));
+    else {
+        DEBUG_PRINT_ERR("Access Point failed to start");
     }
-    Serial.print("Password: ");
-    Serial.println(password);
 
-    String auth_token = "";
-    for (int i = 64; i < 100; ++i) {
-        auth_token += char(EEPROM.read(i));
-    }
-    Serial.print("Auth Token: ");
-    Serial.println(auth_token);
-
-    return auth_token;
+    return state;
 }
 
 void WifiManager::UpdateServer() {
@@ -137,14 +64,19 @@ void WifiManager::UpdateServer() {
 }
 
 bool WifiManager::GetConnectedState() {
-    if (TestConnection()) {
-        Serial.println("Succesfully Connected!");
-        return true;
-    }
-    else {
-        Serial.println("Starting the access point");
-        return false;
-    }
+    return this->connectionState;
+}
+
+String WifiManager::GetSSID() {
+    return ssid;
+}
+
+String WifiManager::GetPassword() {
+    return password;
+}
+
+String WifiManager::GetAuthentication() {
+    return this->authentication;
 }
 
 void WifiManager::CreateAP() {
@@ -158,32 +90,120 @@ void WifiManager::CreateAP() {
         request->send(200, "text/plain", message);
         });
 
-    server.onNotFound(notFound);
+    server.onNotFound(notFoundHandler);
     server.begin();
+
+    DEBUG_PRINT_NOTICE("Server Started");
 }
 
-void WifiManager::LaunchAP() {
-    Serial.println();
-    Serial.print("Access Point IP: ");
-    Serial.println(WiFi.softAPIP());
-    CreateAP();
-}
+void WifiManager::ReadEeprom() {
+    DEBUG_PRINT_NOTICE("Reading EEPROM");
 
-bool WifiManager::TestConnection() {
-    int i = 0;
-    Serial.println("Waiting for Wifi connection");
-
-    WiFi.begin(&ssid[0], &password[0]);
-    while (i < 20) {
-        if (WiFi.status() == WL_CONNECTED) {
-            return true;
-        }
-
-        delay(500);
-        Serial.print("*");
-        i++;
+    for (int i = 0; i < 32; ++i) {
+        this->ssid += char(EEPROM.read(i));
+        this->password += char(EEPROM.read(i + 32));
+        this->authentication += char(EEPROM.read(i + 64));
     }
-    Serial.println();
-    Serial.println("Connection timed out");
-    return false;
+    DEBUG_PRINTLN("SSID: ");
+    DEBUG_PRINT_INFO(this->ssid);
+    DEBUG_PRINTLN("Password: ");
+    DEBUG_PRINT_INFO(this->password);
+    DEBUG_PRINTLN("Authentication: ");
+    DEBUG_PRINT_INFO(this->authentication);
+}
+
+void WifiManager::EraseEeprom() {
+    DEBUG_PRINT_NOTICE("Clearing EEPROM");
+    for (int i = 0; i < 512; ++i) {
+        EEPROM.write(i, 0);
+    }
+    EEPROM.commit();
+}
+
+void WifiManager::CheckEraseButton() {
+    delay(this->rstBtnDelaySec * 1000);
+
+    if (!digitalRead(this->wifiResetPin)) {
+        WifiManager::EraseEeprom();
+    }
+}
+
+void WifiManager::notFoundHandler(AsyncWebServerRequest* request) {
+    request->send(404, "text/plain", "Not found");
+}
+
+void WifiManager::WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* payload, size_t length) {
+    switch (type) {
+    case WStype_DISCONNECTED:
+        DEBUG_PRINTF("[%u] Device disconnected!\n", num);
+        break;
+
+    case WStype_CONNECTED: {
+        IPAddress ip = webSocket.remoteIP(num);
+        DEBUG_PRINTF("[%u] Device connected at %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+
+        webSocket.sendTXT(num, "Connected");
+    }
+        break;
+
+    case WStype_TEXT:
+        if (payload[0] == '#') {
+            String message = String((char*)(payload));
+            message = message.substring(1);
+           DEBUG_PRINT_NOTICE("Received: " + message);
+
+            DynamicJsonDocument doc(1024);
+            DeserializationError error = deserializeJson(doc, message);
+
+            String ssid = doc["ssid"];
+            String password = doc["password"];
+            String authentication = doc["authentication"];
+
+            if (ssid.length() > 0 && password.length() > 0) {
+                DEBUG_PRINT_NOTICE("Clearing EEPROM");
+                for (int i = 0; i < 512; ++i) {
+                    EEPROM.write(i, 0);
+                }
+
+                // Storing credentials
+                DEBUG_PRINT_NOTICE("Writing EEPROM ssid:");
+                DEBUG_PRINTLN("Wrote: ");
+                DEBUG_PRINT_INFO_NO_LN("");
+                for (int i = 0; i < ssid.length(); ++i) {
+                    EEPROM.write(i, ssid[i]);
+                    DEBUG_PRINT(ssid[i]);
+                }
+                DEBUG_PRINTLN();
+                DEBUG_PRINTLN();
+
+                DEBUG_PRINT_NOTICE("Writing EEPROM password:");
+                DEBUG_PRINTLN("Wrote: ");
+                DEBUG_PRINT_INFO_NO_LN("");
+                for (int i = 0; i < password.length(); ++i) {
+                    EEPROM.write(32 + i, password[i]);
+                    DEBUG_PRINT(password[i]);
+                }
+                DEBUG_PRINTLN();
+                DEBUG_PRINTLN();
+
+                DEBUG_PRINT_NOTICE("Writing EEPROM authentication token:");
+                DEBUG_PRINTLN("Wrote: ");
+                DEBUG_PRINT_INFO_NO_LN("");
+                for (int i = 0; i < authentication.length(); ++i) {
+                    EEPROM.write(64 + i, authentication[i]);
+                    DEBUG_PRINT(authentication[i]);
+                }
+                DEBUG_PRINTLN();
+                DEBUG_PRINTLN();
+
+                EEPROM.commit();
+                delay(2000);
+                DEBUG_PRINT_NOTICE("Restarting...");
+                delay(2000);
+
+                ESP.restart();
+                break;
+            }
+        }
+    }
 }

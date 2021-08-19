@@ -15,6 +15,7 @@
 #endif
 
 #include <FastLED.h>
+#include "DebugUtils.h"
 #include "WifiManager.h"
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
@@ -22,12 +23,11 @@
 class Star {
 private:
 	//WifiManager Network Definitions
-	bool connected = 0;
-	char authToken[33];
-	char* espSsid = "StarTopper";
+	WifiManager networkManager;
+	char auth[33];
+	char* espSSID = "StarTopper";
 	char* espPass = "";
 	static const unsigned char wifiResetPin = 5;
-	WifiManager networkManager;
 
 	//Hardware Definitions
 	static const unsigned char pin = 4;
@@ -77,6 +77,8 @@ private:
 	unsigned int brightness = 20;
 	unsigned int currentPattern = 0;
 
+	void WifiError();
+	void WifiLoading();
 	void TracePattern();
 	void BouncePattern();
 	void JugglePattern();

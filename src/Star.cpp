@@ -11,34 +11,22 @@ Star::Star() {
 }
 
 void Star::begin() {
-	pinMode(this->pin, OUTPUT);
-	pinMode(this->wifiResetPin, INPUT_PULLUP);
+	networkManager.Begin();
+	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
 
-	delay(4000);
-	if (!digitalRead(this->wifiResetPin)) {
-		this->networkManager.EraseEeprom();
-	}
-
-	this->networkManager.ReadEeprom().toCharArray(this->authToken, 33);
-
-	if (this->networkManager.GetConnectedState()) {
-		Blynk.config(this->authToken);
-		this->connected = 1;
+	if (networkManager.Connect()) {
+		networkManager.GetAuthentication().toCharArray(this->auth, 33);
+		Blynk.config(this->auth);
 	}
 	else {
-		this->networkManager.SetupAP(this->espSsid, this->espPass);
-		this->connected = 0;
-	}
-
-	if (this->connected) {
-		FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
+		networkManager.SpawnAP(this->espSSID, this->espPass);
 	}
 }
 
 void Star::Update() {
-	this->networkManager.UpdateServer();
+	networkManager.UpdateServer();
 
-	if (this->connected) {
+	if (networkManager.GetConnectedState()) {
 		Blynk.run();
 		FastLED.show();
 		if (this->patternMode) {
@@ -92,6 +80,30 @@ void Star::SetBrightness(unsigned int brightness) {
 
 void Star::SetFramesPerSecond(unsigned int fps) {
 	this->framesPerSecond = fps;
+}
+
+void Star::WifiError() {
+	Star::SetMode(0);
+	Star::SetColor(255, 0, 0);
+
+	while (!networkManager.GetConnectedState()) {
+		Star::SetBrightness(50);
+		FastLED.show();
+		delay(300);
+		Star::SetBrightness(0);
+		FastLED.show();
+		delay(300);
+		Star::SetBrightness(50);
+		FastLED.show();
+		delay(300);
+		Star::SetBrightness(0);
+		FastLED.show();
+		delay(2000);
+	}
+}
+
+void Star::WifiLoading() {
+
 }
 
 void Star::TracePattern() {
