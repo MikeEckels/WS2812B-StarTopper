@@ -15,7 +15,6 @@ void WifiManager::Begin() {
 
     EEPROM.begin(512);
     randomSeed(analogRead(this->seedPin));
-
     WifiManager::CheckEraseButton();
     WifiManager::ReadEeprom();
 }
@@ -41,16 +40,29 @@ bool WifiManager::Connect() {
     return false;
 }
 
-bool WifiManager::SpawnAP(char* ssid, char* password) {
-    char* fullSSID = (char*)malloc(strlen(ssid) + 5);
+bool WifiManager::SpawnAP(String ssid, String password) {
+    bool state = 0;
+    char charSsid[33];
+    char charPassword[33];
+
     WiFi.disconnect();
-    delay(100);
-    (String(ssid) + WifiManager::GetRandomAPSSIDSuffix()).toCharArray(fullSSID, strlen(ssid) + 5);
-    bool state = WiFi.softAP(fullSSID , password);
-    free(fullSSID);
+    WifiManager::AppendRandomAPssidSuffix(ssid);
+    WifiManager::GetAPssid().toCharArray(charSsid, 33);
+    WifiManager::GetPassword().toCharArray(charPassword, 33);
+
+    if (!CheckDuplicateSSID((String)charSsid)) {
+        DEBUG_PRINT_NOTICE("\"" + WifiManager::GetAPssid() + "\"" + " is unique");
+        state = WiFi.softAP(charSsid, charPassword);
+    }
+    else {
+        DEBUG_PRINT_ERR("\"" + WifiManager::GetAPssid() + "\"" + " already exists");
+        state = 0;
+    }
 
     DEBUG_PRINTLN();
     if (state) {
+        DEBUG_PRINTLN("Access Point SSID:");
+        DEBUG_PRINT_INFO(WiFi.softAPSSID());
         DEBUG_PRINTLN("Access Point IP: ");
         DEBUG_PRINT_INFO(WiFi.softAPIP());
         CreateAP();
@@ -135,13 +147,49 @@ void WifiManager::CheckEraseButton() {
     }
 }
 
-String WifiManager::SetRandomAPSSIDSuffix() {
+void WifiManager::AppendRandomAPssidSuffix(String prefix) {
     String suffix;
+
     for (unsigned char i = 0; i < 4; i++) {
         suffix += (String)random(0, 10);
     }
 
-    return String(suffix);
+    this->accessPointSSID = prefix + suffix;
+}
+
+bool WifiManager::CheckDuplicateSSID(String ssid) {
+    DEBUG_PRINT_NOTICE("Checking for duplicate SSID's");
+    bool duplicate = 0;
+    byte numNetworks = WiFi.scanNetworks();
+    
+    if (numNetworks) {
+        DEBUG_PRINT_INFO(String(numNetworks) + " Networks found:");
+
+        for (byte i = 0; i < numNetworks; i++) {
+            String currentSSID = WiFi.SSID(i);
+            DEBUG_PRINT_INFO("\t\"" + currentSSID + "\"");
+            if (currentSSID == ssid) {
+                duplicate = true;
+                break;
+            }
+            else {
+                duplicate = false;
+            }
+        }
+    }
+    else {
+        DEBUG_PRINT_ERR("No networks found");
+        duplicate = false;
+    }
+    return duplicate;
+}
+
+String WifiManager::GetAPssid() {
+    return this->accessPointSSID;
+}
+
+String WifiManager::GetAPpassword() {
+    return this->accessPointPassword;
 }
 
 void WifiManager::notFoundHandler(AsyncWebServerRequest* request) {
@@ -169,7 +217,7 @@ void WifiManager::WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* pay
             DEBUG_PRINT_NOTICE("Received: " + message);
 
             DynamicJsonDocument doc(1024);
-            //DeserializationError error = deserializeJson(doc, message);
+            deserializeJson(doc, message);
 
             String ssid = doc["ssid"];
             String password = doc["password"];

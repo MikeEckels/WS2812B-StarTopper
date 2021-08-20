@@ -19,7 +19,10 @@ void Star::begin() {
 		Blynk.config(this->auth);
 	}
 	else {
-		networkManager.SpawnAP(this->espSSID, this->espPass);
+		//Error no wifi
+		if (!networkManager.SpawnAP(this->espSSIDPrefix, this->espPass)) {
+			//Error cant spawn AP
+		}
 	}
 }
 

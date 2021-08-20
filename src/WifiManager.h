@@ -21,12 +21,11 @@
 
 class WifiManager {
 private:
-	WifiManager(const WifiManager&) = delete;
-	WifiManager& operator = (const WifiManager&) = delete;
-
-	String ssid;
-	String password;
-	String authentication;
+	String ssid = "";
+	String password = "";
+	String authentication = "";
+	String accessPointSSID = "";
+	String accessPointPassword = "";
 	bool connectionState = false;
 	unsigned char rstBtnDelaySec = 4;
 	unsigned char wifiResetPin;
@@ -36,7 +35,11 @@ private:
 	void ReadEeprom();
 	void EraseEeprom();
 	void CheckEraseButton();
-	String SetRandomAPSSIDSuffix();
+	void AppendRandomAPssidSuffix(String prefix);
+	bool CheckDuplicateSSID(String ssid);
+
+	String GetAPssid();
+	String GetAPpassword();
 
 	static void notFoundHandler(AsyncWebServerRequest* request);
 	static void WebSocketEventHandler(uint8_t num, WStype_t type, uint8_t* payload, size_t length);
@@ -48,7 +51,7 @@ public:
 
 	void Begin();
 	bool Connect();
-	bool SpawnAP(char* softap_ssid, char* softap_pass);
+	bool SpawnAP(String softap_ssid, String softap_pass);
 	void UpdateServer();
 
 	String GetSSID();

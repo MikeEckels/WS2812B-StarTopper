@@ -23,11 +23,12 @@
 class Star {
 private:
 	//WifiManager Network Definitions
-	WifiManager networkManager;
 	char auth[33];
-	char* espSSID = (char*)"StarTopper";
-	char* espPass = (char*)"";
+	String espSSIDPrefix = "StarTopper";
+	String espPass = "";
 	static const unsigned char wifiResetPin = 5;
+	static const unsigned char randomSeedPin = A0;
+	WifiManager networkManager;// = WifiManager(wifiResetPin, randomSeedPin);
 
 	//Hardware Definitions
 	static const unsigned char pin = 4;
