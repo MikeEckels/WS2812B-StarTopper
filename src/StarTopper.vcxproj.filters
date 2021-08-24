@@ -27,30 +27,12 @@
     <ClInclude Include="__vm\.WS2812B-StarTopper.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WifiManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WifiManagerWebPage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BlynkSimpleEsp32Fixed.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BlynkSimpleEsp8266Fixed.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Star.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OTAHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WifiManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

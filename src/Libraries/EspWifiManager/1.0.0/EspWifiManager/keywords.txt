@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map EspWifiManager
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+WifiManager	KEYWORD1	WifiManager
+BlynkSimpleEsp32Fixed	KEYWORD1	BlynkSimpleEsp32Fixed
+BlynkSimpleEsp8266Fixed	KEYWORD1	BlynkSimpleEsp8266Fixed
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+Begin	KEYWORD2
+Connect	KEYWORD2
+SpawnAP	KEYWORD2
+UpdateServer	KEYWORD2
+GetSSID	KEYWORD2
+GetPassword	KEYWORD2
+GetAuthentication	KEYWORD2
+GetConnectedState	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################

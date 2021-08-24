@@ -5,18 +5,17 @@
 
 #ifdef ESP8266
 //#include <BlynkSimpleEsp8266.h>
-#include "BlynkSimpleEsp8266Fixed.h"
+#include <BlynkSimpleEsp8266Fixed.h>
 #define FASTLED_ESP8266_RAW_PIN_ORDER
 #elif defined(ESP32)
 //#include <BlynkSimpleEsp32.h>
-#include "BlynkSimpleEsp32Fixed.h"
+#include <BlynkSimpleEsp32Fixed.h>
 #else
 #error "Unsupported Board Type. Please use ESP8266 or ESP32"
 #endif
 
 #include <FastLED.h>
-#include "DebugUtils.h"
-#include "WifiManager.h"
+#include <WifiManager.h>
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
@@ -70,6 +69,7 @@ private:
 							   &Star::PinwheelPattern, &Star::StarburstPattern, &Star::RasterizePattern };
 	
 	//Visual Parameters
+	bool apError = false;
 	bool patternMode = 1;
 	unsigned int hue = 0;
 	unsigned int red = 0;

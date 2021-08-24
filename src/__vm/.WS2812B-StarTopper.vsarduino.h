@@ -6,46 +6,40 @@
 			All non-arduino files created by visual micro and all visual studio project or solution files can be freely deleted and are not required to compile a sketch (do not delete your own code!).
 			Note: debugger breakpoints are stored in '.sln' or '.asln' files, knowledge of last uploaded breakpoints is stored in the upload.vmps.xml file. Both files are required to continue a previous debug session without needing to compile and upload again
 	
-	Hardware: Generic ESP8266 Module, Platform=esp8266, Package=esp8266
+	Hardware: ESP32 Dev Module, Platform=esp32, Package=esp32
 */
 
 #if defined(_VMICRO_INTELLISENSE)
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
-#define __ESP8266_esp8266__
-#define __ESP8266_ESP8266__
-#define __ets__
-#define ICACHE_FLASH
-#define _GNU_SOURCE
-#define MMU_IRAM_SIZE 0x8000
-#define MMU_ICACHE_SIZE 0x8000
-#define NONOSDK22x_190703 1
-#define F_CPU 80000000L
-#define LWIP_OPEN_SRC
-#define TCP_MSS 536
-#define LWIP_FEATURES 1
-#define LWIP_IPV6 0
+#define __ESP32_esp32__
+#define __ESP32_ESP32__
+#define ESP_PLATFORM
+#define HAVE_CONFIG_H
+#define GCC_NOT_5_2_0 0
+#define WITH_POSIX
+#define F_CPU 240000000L
 #define ARDUINO 108013
-#define ARDUINO_ESP8266_GENERIC
-#define ARDUINO_ARCH_ESP8266
-#define LED_BUILTIN 2
-#define FLASHMODE_DIO
-#define ESP8266
+#define ARDUINO_ESP32_DEV
+#define ARDUINO_ARCH_ESP32
+#define ESP32
+#define CORE_DEBUG_LEVEL 0
 #define __cplusplus 201103L
+
+#define _Pragma(x)
 #undef __cplusplus
 #define __cplusplus 201103L
+
 #define __STDC__
 #define __ARM__
 #define __arm__
 #define __inline__
-#define __asm__(x)
-#define __asm__
+#define __asm__(...)
 #define __extension__
 #define __ATTR_PURE__
 #define __ATTR_CONST__
 #define __volatile__
-
 
 #define __ASM
 #define __INLINE
@@ -57,17 +51,9 @@
 #define _Lockit
 #define __CLR_OR_THIS_CALL
 #define C4005
-#define _NEW
+//#define _NEW
 
-//typedef int uint8_t;
-//#define __ARMCC_VERSION 400678
-//#define PROGMEM
-//#define string_literal
-//
-//#define prog_void
-//#define PGM_VOID_P int
-//
-
+typedef bool _Bool;
 typedef int _read;
 typedef int _seek;
 typedef int _write;
@@ -91,52 +77,36 @@ typedef int __gnuc_va_list;
 typedef unsigned char byte;
 extern "C" void __cxa_pure_virtual() {;}
 
-
 typedef long __INTPTR_TYPE__ ;
 typedef long __UINTPTR_TYPE__ ;
-typedef long __SIZE_TYPE__ 	;
+//typedef long __SIZE_TYPE__ 	;
+#define __SIZE_TYPE__ unsigned int
 typedef long __PTRDIFF_TYPE__;
 
-// Additions needed for v3.0.0 Core - Needs to be conditional on it being this core really!!
-#ifndef isnan
-#undef _Lockit
-#undef __STDC__
-#define __STDC__ 1
+typedef long pthread_t;
+typedef long pthread_key_t;
+typedef long pthread_once_t;
+typedef long pthread_mutex_t;
+typedef long pthread_mutex_t;
+typedef long pthread_cond_t;
+
 #define __CHAR_BIT__ 1
-extern int isinf(double);
-extern int isnan(double);
-extern int fpclassify(double);
-extern int signbit(double);
-extern int isfinite(double);
-extern int isnormal(double);
-extern int isgreater(double, double);
-extern int isgreaterequal(double);
-extern int isless(double, double);
-extern int islessequal(double, double);
-extern int islessgreater(double, double);
-extern int isunordered(double, double);
-#endif
 
-#include "new"
-#include "Esp.h"
-
+// Ensure ArduinoJSON Lib Intellisense works correctly
+#define ARDUINOJSON_ENABLE_STD_STREAM 0
 
 #include "arduino.h"
-#include <common.h> 
 #include <pins_arduino.h> 
 
-#include "..\generic\Common.h"
-#include "..\generic\pins_arduino.h"
-
-#undef F
-#define F(string_literal) ((const PROGMEM char *)(string_literal))
-#undef PSTR
-#define PSTR(string_literal) ((const PROGMEM char *)(string_literal))
-//current vc++ does not understand this syntax so use older arduino example for intellisense
-//todo:move to the new clang/gcc project types.
 #define interrupts() sei()
 #define noInterrupts() cli()
 
+#define ESP_LOGI(tag, ...)
+
+// Read Value from Register
+#define READ_PERI_REG(addr)
+// Write Value to Register
+#define WRITE_PERI_REG(addr,val)
 #include "StarTopper.ino"
 #endif
 #endif

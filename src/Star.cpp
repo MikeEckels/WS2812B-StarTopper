@@ -15,12 +15,14 @@ void Star::begin() {
 	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
 
 	if (networkManager.Connect()) {
+		this->apError = false;
 		networkManager.GetAuthentication().toCharArray(this->auth, 33);
 		Blynk.config(this->auth);
 	}
 	else {
 		//Error no wifi
 		if (!networkManager.SpawnAP(this->espSSIDPrefix, this->espPass)) {
+			this->apError = true;
 			//Error cant spawn AP
 		}
 	}
@@ -28,6 +30,7 @@ void Star::begin() {
 
 void Star::Update() {
 	networkManager.UpdateServer();
+	EVERY_N_SECONDS(2) { Star::WifiError(); }
 
 	if (networkManager.GetConnectedState()) {
 		Blynk.run();
@@ -86,10 +89,16 @@ void Star::SetFramesPerSecond(unsigned int fps) {
 }
 
 void Star::WifiError() {
-	Star::SetMode(0);
-	Star::SetColor(255, 0, 0);
+	if (!networkManager.GetConnectedState()) {
+		Star::SetMode(0);
 
-	while (!networkManager.GetConnectedState()) {
+		if (this->apError) {
+			Star::SetColor(255, 255, 0);
+		}
+		else {
+			Star::SetColor(255, 0, 0);
+		}
+
 		Star::SetBrightness(50);
 		FastLED.show();
 		delay(300);
@@ -101,7 +110,6 @@ void Star::WifiError() {
 		delay(300);
 		Star::SetBrightness(0);
 		FastLED.show();
-		delay(2000);
 	}
 }
 

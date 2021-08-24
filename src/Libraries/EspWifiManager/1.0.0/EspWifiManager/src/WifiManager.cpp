@@ -160,14 +160,15 @@ void WifiManager::AppendRandomAPssidSuffix(String prefix) {
 bool WifiManager::CheckDuplicateSSID(String ssid) {
     DEBUG_PRINT_NOTICE("Checking for duplicate SSID's");
     bool duplicate = 0;
-    byte numNetworks = WiFi.scanNetworks();
+    unsigned int numNetworks = WiFi.scanNetworks();
     
     if (numNetworks) {
         DEBUG_PRINT_INFO(String(numNetworks) + " Networks found:");
 
-        for (byte i = 0; i < numNetworks; i++) {
+        for (unsigned int i = 0; i < numNetworks; i++) {
             String currentSSID = WiFi.SSID(i);
-            DEBUG_PRINT_INFO("\t\"" + currentSSID + "\"");
+            String currentEncryption = (WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*";
+            DEBUG_PRINT_INFO("\t\"" + currentSSID + "\"" + currentEncryption);
             if (currentSSID == ssid) {
                 duplicate = true;
                 break;
