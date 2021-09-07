@@ -11,10 +11,11 @@ Star::Star() {
 }
 
 void Star::begin() {
-	networkManager.Begin();
 	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
-
-	if (networkManager.Connect()) {
+	networkManager.Begin(WifiResetCallback);
+	Star::SetMode(1);
+	
+	if (networkManager.Connect(WifiLoadingCallback)) {
 		this->apError = false;
 		networkManager.GetAuthentication().toCharArray(this->auth, 33);
 		Blynk.config(this->auth);
@@ -111,10 +112,7 @@ void Star::WifiError() {
 		Star::SetBrightness(0);
 		FastLED.show();
 	}
-}
-
-void Star::WifiLoading() {
-
+	Star::SetBrightness(20);
 }
 
 void Star::TracePattern() {
@@ -202,6 +200,25 @@ void Star::AddGlitter(fract8 chance) {
 	if (random8() < chance) {
 		this->leds[random16(this->numLEDsTotal)] += CRGB::White;
 	}
+}
+
+void Star::WifiResetCallback(void) {
+	/*for (unsigned char i = 0; i < 3; i++) {
+		for (unsigned int led = 0; led < numLEDsTotal; led++) {
+			leds[led] = CRGB(255, 0, 0);
+		}
+		FastLED.show();
+		delay(300);
+		for (unsigned int led = 0; led < numLEDsTotal; led++) {
+			leds[led] = CRGB(0, 0, 255);
+		}
+		FastLED.show();
+		delay(300);
+	}*/
+}
+
+void Star::WifiLoadingCallback(int status) {
+
 }
 
 extern BLYNK_WRITE(V1) {

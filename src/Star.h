@@ -70,7 +70,7 @@ private:
 	
 	//Visual Parameters
 	bool apError = false;
-	bool patternMode = 1;
+	bool patternMode = 0;
 	unsigned int hue = 0;
 	unsigned int red = 0;
 	unsigned int blue = 0;
@@ -78,8 +78,8 @@ private:
 	unsigned int brightness = 20;
 	unsigned int currentPattern = 0;
 
+	
 	void WifiError();
-	void WifiLoading();
 	void TracePattern();
 	void BouncePattern();
 	void JugglePattern();
@@ -90,6 +90,9 @@ private:
 	void StarburstPattern();
 	void RasterizePattern();
 	void AddGlitter(fract8 chance);
+
+	static void WifiResetCallback(void);
+	static void WifiLoadingCallback(int status);
 
 public:
 	Star();
