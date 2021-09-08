@@ -112,7 +112,6 @@ void Star::WifiError() {
 		Star::SetBrightness(0);
 		FastLED.show();
 	}
-	Star::SetBrightness(20);
 }
 
 void Star::TracePattern() {
