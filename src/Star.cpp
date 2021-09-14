@@ -12,10 +12,10 @@ Star::Star() {
 
 void Star::begin() {
 	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
-	networkManager.Begin(WifiResetCallback);
+	networkManager.Begin(std::bind(&Star::WifiResetCallback, this));
 	Star::SetMode(1);
 	
-	if (networkManager.Connect(WifiLoadingCallback)) {
+	if (networkManager.Connect(std::bind(&Star::WifiLoadingCallback, this, std::placeholders::_1))) {
 		this->apError = false;
 		networkManager.GetAuthentication().toCharArray(this->auth, 33);
 		Blynk.config(this->auth);
@@ -202,22 +202,48 @@ void Star::AddGlitter(fract8 chance) {
 }
 
 void Star::WifiResetCallback(void) {
-	/*for (unsigned char i = 0; i < 3; i++) {
-		for (unsigned int led = 0; led < numLEDsTotal; led++) {
-			leds[led] = CRGB(255, 0, 0);
-		}
+	Star::SetBrightness(50);
+	for (unsigned char i = 0; i < 3; i++) {
+		Star::SetColor(255, 0, 0);
 		FastLED.show();
 		delay(300);
-		for (unsigned int led = 0; led < numLEDsTotal; led++) {
-			leds[led] = CRGB(0, 0, 255);
-		}
+		Star::SetColor(0, 0, 255);
 		FastLED.show();
 		delay(300);
-	}*/
+	}
+	Star::SetColor(0, 0, 0);
 }
 
 void Star::WifiLoadingCallback(int status) {
+	static int i;
+	static int oldStatus;
+	static bool turningOn = true;
 
+	DEBUG_PRINT(status);
+	
+	if (status != oldStatus) {
+		i++;
+		if (i >= this->numPoints) {
+			i = 0;
+			turningOn = !turningOn;
+		}
+	}
+
+	if (turningOn) {
+		for (int j = 0; j < this->numLEDsPerPoint; j++) {
+			this->leds[this->points[i][j]] += CRGB(0, 0, 255);
+			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] += CRGB(0, 0, 255);
+		}
+	}
+	else {
+		for (int j = 0; j < this->numLEDsPerPoint; j++) {
+			this->leds[this->points[i][j]] = CRGB::Black;
+			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] = CRGB::Black;
+		}
+	}
+
+	FastLED.show();
+	oldStatus = status;
 }
 
 extern BLYNK_WRITE(V1) {

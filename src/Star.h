@@ -14,6 +14,7 @@
 #error "Unsupported Board Type. Please use ESP8266 or ESP32"
 #endif
 
+#include<functional>
 #include <FastLED.h>
 #include <WifiManager.h>
 
@@ -91,8 +92,8 @@ private:
 	void RasterizePattern();
 	void AddGlitter(fract8 chance);
 
-	static void WifiResetCallback(void);
-	static void WifiLoadingCallback(int status);
+	void WifiResetCallback(void);
+	void WifiLoadingCallback(int status);
 
 public:
 	Star();
