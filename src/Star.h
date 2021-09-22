@@ -1,8 +1,8 @@
 #ifndef STAR_H
 #define STAR_H
 
-#define DEV_TOPPER
-//#define CHRIS_TOPPER
+//#define DEV_TOPPER
+#define CHRIS_TOPPER
 //#define MOM_TOPPER
 
 #ifdef DEV_TOPPER
@@ -11,7 +11,7 @@
 #endif
 
 #ifdef CHRIS_TOPPER
-#define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
+#define BLYNK_TEMPLATE_ID "TMPLsvLCbD74"
 #define BLYNK_DEVICE_NAME "ChrisStarTopper"
 #endif
 
@@ -38,6 +38,8 @@
 #include <WifiManager.h>
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
+
+static WidgetTerminal terminal(V6);
 
 static struct colorParams_t {
 	unsigned int hue = 0;

@@ -224,6 +224,7 @@ void Star::WifiLoadingCallback(int status) {
 	static bool turningOn = true;
 
 	DEBUG_PRINT(status);
+	terminal.print(status);
 	
 	if (status != oldStatus) {
 		i++;
@@ -259,6 +260,7 @@ colorParams_t Star::GetColors() {
 }
 
 extern BLYNK_CONNECTED() {	
+	terminal.println("StarTopper Online");
 	Blynk.virtualWrite(V1, internStar::pThis->GetMode());
 	Blynk.virtualWrite(V2, internStar::pThis->GetColors().brightness);
 	Blynk.virtualWrite(V3, internStar::pThis->GetColors().red);
@@ -269,20 +271,30 @@ extern BLYNK_CONNECTED() {
 
 extern BLYNK_WRITE(V1) {
 	internStar::pThis->SetMode((bool)param.asInt());
+	terminal.print("Mode set to: ");
+	terminal.println((bool)param.asInt());
 }
 
 extern BLYNK_WRITE(V2) {
 	internStar::pThis->SetBrightness((unsigned int)param.asInt());
+	terminal.print("Brightness set to: ");
+	terminal.println(param.asInt());
 }
 
 extern BLYNK_WRITE(V3) {
 	internStar::pThis->SetColor((unsigned int)param.asInt(), internStar::pThis->GetColors().green, internStar::pThis->GetColors().blue);
+	terminal.print("RED set to: ");
+	terminal.println(param.asInt());
 }
 
 extern BLYNK_WRITE(V4) {
 	internStar::pThis->SetColor(internStar::pThis->GetColors().red, (unsigned int)param.asInt(), internStar::pThis->GetColors().blue);
+	terminal.print("GREEN set to: ");
+	terminal.println(param.asInt());
 }
 
 extern BLYNK_WRITE(V5) {
 	internStar::pThis->SetColor(internStar::pThis->GetColors().red, internStar::pThis->GetColors().green, (unsigned int)param.asInt());
+	terminal.print("BLUE set to: ");
+	terminal.println(param.asInt());
 }
