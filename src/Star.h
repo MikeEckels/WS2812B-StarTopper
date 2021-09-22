@@ -1,7 +1,24 @@
 #ifndef STAR_H
 #define STAR_H
-#define BLYNK_TEMPLATE_ID           "TMPLsSXg8uS6"
-#define BLYNK_DEVICE_NAME           "StarTopper"
+
+#define DEV_TOPPER
+//#define CHRIS_TOPPER
+//#define MOM_TOPPER
+
+#ifdef DEV_TOPPER
+#define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
+#define BLYNK_DEVICE_NAME "DevStarTopper"
+#endif
+
+#ifdef CHRIS_TOPPER
+#define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
+#define BLYNK_DEVICE_NAME "ChrisStarTopper"
+#endif
+
+#ifdef MOM_TOPPER
+#define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
+#define BLYNK_DEVICE_NAME "MomStarTopper"
+#endif
 
 #include "Arduino.h"
 
@@ -107,6 +124,7 @@ public:
 	void NextPattern();
 	void LoopPatterns(unsigned int nSeconds);
 	
+	bool GetMode();
 	colorParams_t GetColors();
 
 	void SetPattern(unsigned int patternNumber);

@@ -13,12 +13,12 @@ Star::Star() {
 void Star::begin() {
 	FastLED.addLeds<WS2812B, this->pin, this->colorOrder>(this->leds, this->numLEDsTotal).setCorrection(this->colorCorrection);
 	networkManager.Begin(std::bind(&Star::WifiResetCallback, this));
-	Star::SetMode(1);
-	
+
 	if (networkManager.Connect(std::bind(&Star::WifiLoadingCallback, this, std::placeholders::_1))) {
 		this->apError = false;
 		networkManager.GetAuthentication().toCharArray(this->auth, 33);
 		Blynk.config(this->auth);
+
 	}
 	else {
 		//Error no wifi
@@ -74,10 +74,10 @@ void Star::SetMode(bool isPattern) {
 }
 
 void Star::SetColor(unsigned int r, unsigned int g, unsigned int b) {
+	colorParams.red = r;
+	colorParams.green = g;
+	colorParams.blue = b;
 	if (!(this->patternMode)) {
-		colorParams.red = r;
-		colorParams.green = g;
-		colorParams.blue = b;
 		for (unsigned int led = 0; led < this->numLEDsTotal; led++) {
 			this->leds[led] = CRGB(r, g, b);
 		}
@@ -85,6 +85,7 @@ void Star::SetColor(unsigned int r, unsigned int g, unsigned int b) {
 }
 
 void Star::SetBrightness(unsigned int brightness) {
+	colorParams.brightness = brightness;
 	FastLED.setBrightness(brightness);
 }
 
@@ -249,8 +250,21 @@ void Star::WifiLoadingCallback(int status) {
 	oldStatus = status;
 }
 
+bool Star::GetMode() {
+	return this->patternMode;
+}
+
 colorParams_t Star::GetColors() {
 	return colorParams;
+}
+
+extern BLYNK_CONNECTED() {	
+	Blynk.virtualWrite(V1, internStar::pThis->GetMode());
+	Blynk.virtualWrite(V2, internStar::pThis->GetColors().brightness);
+	Blynk.virtualWrite(V3, internStar::pThis->GetColors().red);
+	Blynk.virtualWrite(V4, internStar::pThis->GetColors().green);
+	Blynk.virtualWrite(V5, internStar::pThis->GetColors().blue);
+	Blynk.syncVirtual(V1, V2, V3, V4, V5);
 }
 
 extern BLYNK_WRITE(V1) {
