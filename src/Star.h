@@ -1,5 +1,7 @@
 #ifndef STAR_H
 #define STAR_H
+#define BLYNK_TEMPLATE_ID           "TMPLsSXg8uS6"
+#define BLYNK_DEVICE_NAME           "StarTopper"
 
 #include "Arduino.h"
 
@@ -19,6 +21,14 @@
 #include <WifiManager.h>
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
+
+static struct colorParams_t {
+	unsigned int hue = 0;
+	unsigned int red = 0;
+	unsigned int blue = 0;
+	unsigned int green = 0;
+	unsigned int brightness = 20;
+}colorParams;
 
 class Star {
 private:
@@ -72,11 +82,6 @@ private:
 	//Visual Parameters
 	bool apError = false;
 	bool patternMode = 0;
-	unsigned int hue = 0;
-	unsigned int red = 0;
-	unsigned int blue = 0;
-	unsigned int green = 0;
-	unsigned int brightness = 20;
 	unsigned int currentPattern = 0;
 
 	
@@ -101,8 +106,10 @@ public:
 	void Update();
 	void NextPattern();
 	void LoopPatterns(unsigned int nSeconds);
-	void SetPattern(unsigned int patternNumber);
+	
+	colorParams_t GetColors();
 
+	void SetPattern(unsigned int patternNumber);
 	void SetMode(bool isPattern);
 	void SetColor(unsigned int r, unsigned int g, unsigned int b);
 	void SetBrightness(unsigned int brightness);

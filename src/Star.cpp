@@ -40,7 +40,7 @@ void Star::Update() {
 			(this->*patterns[this->currentPattern])();
 			FastLED.show();
 			FastLED.delay((1000 / this->framesPerSecond));
-			EVERY_N_MILLISECONDS(20) { this->hue++; }
+			EVERY_N_MILLISECONDS(20) { colorParams.hue++; }
 		}
 	}
 }
@@ -75,6 +75,9 @@ void Star::SetMode(bool isPattern) {
 
 void Star::SetColor(unsigned int r, unsigned int g, unsigned int b) {
 	if (!(this->patternMode)) {
+		colorParams.red = r;
+		colorParams.green = g;
+		colorParams.blue = b;
 		for (unsigned int led = 0; led < this->numLEDsTotal; led++) {
 			this->leds[led] = CRGB(r, g, b);
 		}
@@ -117,8 +120,8 @@ void Star::WifiError() {
 void Star::TracePattern() {
 	fadeToBlackBy(this->leds, this->numLEDsTotal, 20);
 	int pos = beatsin16((this->framesPerSecond / 10), 0, (this->numLEDsBorder - 1));
-	this->leds[this->ledBorder[pos]] += CHSV(this->hue, 255, 192);
-	this->leds[this->ledBorder[pos] + (this->numLEDsTotal / 2)] += CHSV(this->hue, 255, 192);
+	this->leds[this->ledBorder[pos]] += CHSV(colorParams.hue, 255, 192);
+	this->leds[this->ledBorder[pos] + (this->numLEDsTotal / 2)] += CHSV(colorParams.hue, 255, 192);
 }
 
 void Star::BouncePattern() {
@@ -126,7 +129,7 @@ void Star::BouncePattern() {
 	CRGBPalette16 palette = PartyColors_p;
 	uint8_t beat = beatsin8(BeatsPerMinute, 64, 255);
 	for (int i = 0; i < this->numLEDsTotal; i++) { //9948
-		this->leds[i] = ColorFromPalette(palette, (this->hue + (i * 2)), (beat - this->hue + (i * 10)));
+		this->leds[i] = ColorFromPalette(palette, (colorParams.hue + (i * 2)), (beat - colorParams.hue + (i * 10)));
 	}
 }
 
@@ -140,7 +143,7 @@ void Star::JugglePattern() {
 }
 
 void Star::RainbowPattern() {
-	fill_rainbow(this->leds, this->numLEDsTotal, this->hue, 7);
+	fill_rainbow(this->leds, this->numLEDsTotal, colorParams.hue, 7);
 }
 
 void Star::GRainbowPattern() {
@@ -151,15 +154,15 @@ void Star::GRainbowPattern() {
 void Star::ConfettiPattern() {
 	fadeToBlackBy(this->leds, this->numLEDsTotal, 10);
 	int pos = random16(this->numLEDsTotal);
-	this->leds[pos] += CHSV((this->hue + random8(64)), 200, 255);
+	this->leds[pos] += CHSV((colorParams.hue + random8(64)), 200, 255);
 }
 
 void Star::PinwheelPattern() {
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < this->numLEDsPerPoint; j++) {
-			this->leds[this->points[i][j]] += CHSV(this->hue, 255, 192);
-			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] += CHSV(this->hue, 255, 192);
-			this->hue++;
+			this->leds[this->points[i][j]] += CHSV(colorParams.hue, 255, 192);
+			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] += CHSV(colorParams.hue, 255, 192);
+			colorParams.hue++;
 		}
 		FastLED.show();
 		FastLED.delay(this->framesPerSecond);
@@ -179,11 +182,11 @@ void Star::StarburstPattern() {
 	fadeToBlackBy(this->leds, this->numLEDsTotal, 20);
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < this->numLEDsPerPoint; j++) {
-			this->leds[this->points[i][j]] += CHSV(this->hue, 255, 192);
-			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] += CHSV(this->hue, 255, 192);
+			this->leds[this->points[i][j]] += CHSV(colorParams.hue, 255, 192);
+			this->leds[this->points[i][j] + (this->numLEDsTotal / 2)] += CHSV(colorParams.hue, 255, 192);
 			for (int k = 0; k < this->numLEDsMiddle; k++) {
-				this->leds[this->ledMiddle[k]] += CHSV(this->hue + 10, 255, 192);
-				this->leds[this->ledMiddle[k] + (this->numLEDsTotal / 2)] += CHSV((this->hue + 10), 255, 192);
+				this->leds[this->ledMiddle[k]] += CHSV(colorParams.hue + 10, 255, 192);
+				this->leds[this->ledMiddle[k] + (this->numLEDsTotal / 2)] += CHSV((colorParams.hue + 10), 255, 192);
 			}
 		}
 	}
@@ -192,7 +195,7 @@ void Star::StarburstPattern() {
 void Star::RasterizePattern() {
 	fadeToBlackBy(this->leds, this->numLEDsTotal, 20);
 	int pos = beatsin16((this->framesPerSecond / 10), 0, (this->numLEDsTotal - 1));
-	this->leds[pos] += CHSV(this->hue, 255, 192);
+	this->leds[pos] += CHSV(colorParams.hue, 255, 192);
 }
 
 void Star::AddGlitter(fract8 chance) {
@@ -246,6 +249,10 @@ void Star::WifiLoadingCallback(int status) {
 	oldStatus = status;
 }
 
+colorParams_t Star::GetColors() {
+	return colorParams;
+}
+
 extern BLYNK_WRITE(V1) {
 	internStar::pThis->SetMode((bool)param.asInt());
 }
@@ -255,5 +262,13 @@ extern BLYNK_WRITE(V2) {
 }
 
 extern BLYNK_WRITE(V3) {
-	internStar::pThis->SetColor((unsigned int)param[0].asInt(), (unsigned int)param[1].asInt(), (unsigned int)param[2].asInt());
+	internStar::pThis->SetColor((unsigned int)param.asInt(), internStar::pThis->GetColors().green, internStar::pThis->GetColors().blue);
+}
+
+extern BLYNK_WRITE(V4) {
+	internStar::pThis->SetColor(internStar::pThis->GetColors().red, (unsigned int)param.asInt(), internStar::pThis->GetColors().blue);
+}
+
+extern BLYNK_WRITE(V5) {
+	internStar::pThis->SetColor(internStar::pThis->GetColors().red, internStar::pThis->GetColors().green, (unsigned int)param.asInt());
 }
