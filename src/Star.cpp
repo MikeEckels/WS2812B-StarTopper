@@ -48,7 +48,7 @@ void Star::Update() {
 				static unsigned int oldGreen = 0;
 				static unsigned int oldBlue = 0;
 
-				if (oldRed != colorParams.red | oldGreen != colorParams.green | oldBlue != colorParams.blue) {
+				if ((oldRed != colorParams.red) | (oldGreen != colorParams.green) | (oldBlue != colorParams.blue)) {
 					terminal.println("Red: " + (String)colorParams.red + "   Green: " + (String)colorParams.green + "   Blue: " + (String)colorParams.blue);
 
 					oldRed = colorParams.red;
