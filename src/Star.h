@@ -1,8 +1,8 @@
 #ifndef STAR_H
 #define STAR_H
 
-//#define DEV_TOPPER
-#define CHRIS_TOPPER
+#define DEV_TOPPER
+//#define CHRIS_TOPPER
 //#define MOM_TOPPER
 
 #ifdef DEV_TOPPER
@@ -39,6 +39,7 @@
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
+static bool callBlynkOnce;
 static WidgetTerminal terminal(V6);
 
 static struct colorParams_t {
@@ -103,7 +104,6 @@ private:
 	bool patternMode = 0;
 	unsigned int currentPattern = 0;
 
-	
 	void WifiError();
 	void TracePattern();
 	void BouncePattern();
@@ -125,6 +125,9 @@ public:
 	void Update();
 	void NextPattern();
 	void LoopPatterns(unsigned int nSeconds);
+
+	bool blynkConnected = false;
+	bool disconnectError = false;
 	
 	bool GetMode();
 	colorParams_t GetColors();
@@ -134,6 +137,7 @@ public:
 	void SetColor(unsigned int r, unsigned int g, unsigned int b);
 	void SetBrightness(unsigned int brightness);
 	void SetFramesPerSecond(unsigned int fps);
+
 };
 
 #endif //STAR_H

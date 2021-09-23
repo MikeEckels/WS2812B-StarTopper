@@ -35,20 +35,49 @@ void Star::Update() {
 
 	if (networkManager.GetConnectedState()) {
 		Blynk.run();
-		FastLED.show();
-		if (this->patternMode) {
-			(this->*patterns[this->currentPattern])();
+		if (blynkConnected) {
 			FastLED.show();
-			FastLED.delay((1000 / this->framesPerSecond));
-			EVERY_N_MILLISECONDS(20) { colorParams.hue++; }
+			if (this->patternMode) {
+				(this->*patterns[this->currentPattern])();
+				FastLED.show();
+				FastLED.delay((1000 / this->framesPerSecond));
+				EVERY_N_MILLISECONDS(20) { colorParams.hue++; }
+			}
+			else {
+				static unsigned int oldRed = 0;
+				static unsigned int oldGreen = 0;
+				static unsigned int oldBlue = 0;
+
+				if (oldRed != colorParams.red | oldGreen != colorParams.green | oldBlue != colorParams.blue) {
+					terminal.println("Red: " + (String)colorParams.red + "   Green: " + (String)colorParams.green + "   Blue: " + (String)colorParams.blue);
+
+					oldRed = colorParams.red;
+					oldGreen = colorParams.green;
+					oldBlue = colorParams.blue;
+				}
+			}
 		}
 	}
+	else {
+		if (!callBlynkOnce) {
+			for (unsigned int led = 0; led < this->numLEDsTotal; led++) {
+				this->leds[led] = CRGB::Red;
+				colorParams.red = 255;
+			}
+			FastLED.show();
+
+			Blynk.run();
+			callBlynkOnce = true;
+		}
+	}
+	terminal.flush();
 }
 
 void Star::NextPattern() {
 	if (this->patternMode) {
 		FastLED.clear();
 		this->currentPattern = (this->currentPattern + 1) % ARRAY_SIZE(this->patterns);
+		terminal.println("   [+]Pattern Updated: " + (String)this->currentPattern);
 	}
 }
 
@@ -71,6 +100,11 @@ void Star::SetPattern(unsigned int patternNumber) {
 
 void Star::SetMode(bool isPattern) {
 	this->patternMode = isPattern;
+	if (!this->patternMode) {
+		for (unsigned int led = 0; led < this->numLEDsTotal; led++) {
+			this->leds[led] = CRGB(colorParams.red, colorParams.green, colorParams.blue);
+		}
+	}
 }
 
 void Star::SetColor(unsigned int r, unsigned int g, unsigned int b) {
@@ -100,8 +134,17 @@ void Star::WifiError() {
 		if (this->apError) {
 			Star::SetColor(255, 255, 0);
 		}
-		else {
-			Star::SetColor(255, 0, 0);
+		else if (this->disconnectError) {
+			for (unsigned int led = 0; led < this->numLEDsTotal; led++) {
+				this->leds[led] = CRGB::Black;
+				colorParams.red = 0;
+				colorParams.green = 0;
+				colorParams.blue = 0;
+			}
+			networkManager.Connect(std::bind(&Star::WifiLoadingCallback, this, std::placeholders::_1));
+			SetMode(1);
+			SetBrightness(Star::GetColors().brightness);
+			return;
 		}
 
 		Star::SetBrightness(50);
@@ -115,6 +158,10 @@ void Star::WifiError() {
 		delay(300);
 		Star::SetBrightness(0);
 		FastLED.show();
+	}
+	else {
+		this->disconnectError = false;
+		callBlynkOnce = false;
 	}
 }
 
@@ -224,7 +271,6 @@ void Star::WifiLoadingCallback(int status) {
 	static bool turningOn = true;
 
 	DEBUG_PRINT(status);
-	terminal.print(status);
 	
 	if (status != oldStatus) {
 		i++;
@@ -260,41 +306,48 @@ colorParams_t Star::GetColors() {
 }
 
 extern BLYNK_CONNECTED() {	
-	terminal.println("StarTopper Online");
 	Blynk.virtualWrite(V1, internStar::pThis->GetMode());
 	Blynk.virtualWrite(V2, internStar::pThis->GetColors().brightness);
 	Blynk.virtualWrite(V3, internStar::pThis->GetColors().red);
 	Blynk.virtualWrite(V4, internStar::pThis->GetColors().green);
 	Blynk.virtualWrite(V5, internStar::pThis->GetColors().blue);
 	Blynk.syncVirtual(V1, V2, V3, V4, V5);
+	terminal.clear();
+	terminal.println("   [!]StarTopper Online");
+
+	internStar::pThis->blynkConnected = true;
+}
+
+extern BLYNK_DISCONNECTED() {
+	internStar::pThis->blynkConnected = false;
+	internStar::pThis->disconnectError = true;
 }
 
 extern BLYNK_WRITE(V1) {
 	internStar::pThis->SetMode((bool)param.asInt());
-	terminal.print("Mode set to: ");
-	terminal.println((bool)param.asInt());
+	terminal.println("Mode set to: " + (String)param.asInt());
 }
 
 extern BLYNK_WRITE(V2) {
 	internStar::pThis->SetBrightness((unsigned int)param.asInt());
-	terminal.print("Brightness set to: ");
-	terminal.println(param.asInt());
+	terminal.println("Brightness set to: " + (String)param.asInt());
 }
 
 extern BLYNK_WRITE(V3) {
 	internStar::pThis->SetColor((unsigned int)param.asInt(), internStar::pThis->GetColors().green, internStar::pThis->GetColors().blue);
-	terminal.print("RED set to: ");
-	terminal.println(param.asInt());
 }
 
 extern BLYNK_WRITE(V4) {
 	internStar::pThis->SetColor(internStar::pThis->GetColors().red, (unsigned int)param.asInt(), internStar::pThis->GetColors().blue);
-	terminal.print("GREEN set to: ");
-	terminal.println(param.asInt());
 }
 
 extern BLYNK_WRITE(V5) {
 	internStar::pThis->SetColor(internStar::pThis->GetColors().red, internStar::pThis->GetColors().green, (unsigned int)param.asInt());
-	terminal.print("BLUE set to: ");
-	terminal.println(param.asInt());
+}
+
+extern BLYNK_WRITE(V7) {
+	if (param.asInt()) {
+		terminal.clear();
+		terminal.clearWriteError();
+	}
 }
