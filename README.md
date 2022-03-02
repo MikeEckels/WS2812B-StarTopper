@@ -5,7 +5,7 @@
  - [3D Files](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/3DFiles)
  - [Altium Files](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/AltiumFiles)
  
- <img src="https://i.imgur.com/AshTQ8v.jpg" width="400">
+ <img src="https://i.imgur.com/AshTQ8v.jpg" width="400"> <img src="https://imgur.com/CQcdy83.jpg" width="600">
  
  # Electronics Overview
  All schematics and PCB's were created in Altium Designer. The PCB's were sent to JLCPCB for fabrication. The heart of the system is the ESP8266-12E module. This module was embedded into a small PCB with a BSS138 level shifter for the 5v<-->3.3v conversion between the ESP and the WS2812B LED's. The module also contains a AP2112K-3.3 linear voltage regulator to power the ESP from the main 5V supply. The main star PCB contains 63 WS2812B LED's with power connected in parallel, and thier data lines in series. The ESP board connects to the first stars DIN pin, and the second star's DIN pin connects to the first star's DOUT pin. The entire system is powered by a MeanWell LPV 35-5 powersupply. If a custom PCB is not desired, a standard ESP32Devkit can be used instead.
