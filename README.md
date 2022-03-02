@@ -19,7 +19,7 @@
   
  ## Power Supply
   - [Purchased Here](https://www.meanwell-web.com/en-gb/ac-dc-single-output-led-driver-constant-voltage-cv-lpv--35--5)
-  - [STL's Here](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/3DFiles/STLs/PowerSupply)
+  - [STL's Here](https://github.com/MikeEckels/WS2812B-StarTopper/tree/main/3DFiles/STLs)
   
  # Code Overveiew
  This library provides a simple wrapper around a popular LED control library called [FastLED](https://github.com/FastLED/FastLED). This enables simple and elegant control of every LED on the star as well as the ability to create and sequence patterns. I also developed a network manager to allow for seamless transitions from one network to another. That can be found [here](https://github.com/MikeEckels/EspWifiManager).
