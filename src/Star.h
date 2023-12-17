@@ -1,23 +1,23 @@
 #ifndef STAR_H
 #define STAR_H
 
-#define DEV_TOPPER
+//#define DEV_TOPPER
 //#define CHRIS_TOPPER
-//#define MOM_TOPPER
+#define MOM_TOPPER
 
 #ifdef DEV_TOPPER
 #define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
-#define BLYNK_DEVICE_NAME "DevStarTopper"
+#define BLYNK_TEMPLATE_NAME "DevStarTopper"
 #endif
 
 #ifdef CHRIS_TOPPER
 #define BLYNK_TEMPLATE_ID "TMPLsvLCbD74"
-#define BLYNK_DEVICE_NAME "ChrisStarTopper"
+#define BLYNK_TEMPLATE_NAME "ChrisStarTopper"
 #endif
 
 #ifdef MOM_TOPPER
-#define BLYNK_TEMPLATE_ID "TMPLsSXg8uS6"
-#define BLYNK_DEVICE_NAME "MomStarTopper"
+#define BLYNK_TEMPLATE_ID "TMPL2FI4gYD1A"
+#define BLYNK_TEMPLATE_NAME "StarTopper"
 #endif
 
 #include "Arduino.h"
